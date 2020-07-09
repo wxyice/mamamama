@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>math_aggregate_1.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<link rel="stylesheet" href="markit.css"></link>
+<h1 id="%E7%AC%AC1%E7%AB%A0-%E9%9B%86%E5%90%88%E5%92%8C%E9%80%BB%E8%BE%91">第1章 集合和逻辑</h1>
+<h2>目录</h2>
+<div class="meun">
+<ul>
+<li><a href="#%E7%AC%AC1%E7%AB%A0-%E9%9B%86%E5%90%88%E5%92%8C%E9%80%BB%E8%BE%91">第1章 集合和逻辑</a>
+<ul>
+<li><a href="#1%E9%9B%86%E5%90%88%E7%9A%84%E6%A6%82%E5%BF%B5">1.集合的概念</a>
+<ul>
+<li><a href="#%E5%85%83%E7%B4%A0%E4%B8%8E%E9%9B%86%E5%90%88">元素与集合</a></li>
+<li><a href="#%E5%85%83%E7%B4%A0%E4%B8%8E%E9%9B%86%E5%90%88%E7%9A%84%E5%85%B3%E7%B3%BB">元素与集合的关系</a></li>
+<li><a href="#%E9%9B%86%E5%90%88%E4%B8%AD%E5%85%83%E7%B4%A0%E7%89%B9%E6%80%A7">集合中元素特性</a></li>
+<li><a href="#%E9%9B%86%E5%90%88%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95">集合的表示方法</a></li>
+</ul>
+</li>
+<li><a href="#2%E9%9B%86%E5%90%88%E9%97%B4%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%85%B3%E7%B3%BB">2.集合间的基本关系</a>
+<ul>
+<li><a href="#%E5%AD%90%E9%9B%86">子集</a></li>
+<li><a href="#%E7%9C%9F%E5%AD%90%E9%9B%86">真子集</a></li>
+<li><a href="#%E7%A9%BA%E9%9B%86">空集</a></li>
+</ul>
+</li>
+<li><a href="#3%E9%9B%86%E5%90%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97">3.集合的基本运算</a>
+<ul>
+<li><a href="#%E5%B9%B6%E9%9B%86">并集</a></li>
+<li><a href="#%E4%BA%A4%E9%9B%86">交集</a></li>
+<li><a href="#%E5%85%A8%E9%9B%86">全集</a></li>
+<li><a href="#%E8%A1%A5%E9%9B%86">补集</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="mainetext">
+<h2 id="1%E9%9B%86%E5%90%88%E7%9A%84%E6%A6%82%E5%BF%B5">1.集合的概念</h2>
+<p>为了明白什么集合，我们先从集合里面有什么开始看起。</p>
+<h3 id="%E5%85%83%E7%B4%A0%E4%B8%8E%E9%9B%86%E5%90%88">元素与集合</h3>
+<p><strong>什么是元素</strong></p>
+<p>一般的，我们把研究对象统称为元素。那么什么是研究对象。研究对象可以是任何东西，数，等等，比如，我可以把班级里的每一个人看成是元素，把自然数看成是元素，把不同颜色的小球看成是元素。但是元素必须是具有明确标准，可以判断是否在集合内的对象。</p>
+<p>比如“这本书的所有难题”就不可作为集合的元素，因为没有办法判断什么样的题是难题。</p>
+<p><strong>什么是集合</strong></p>
+<p>一般的我们把一些元素组成的整体叫做集合（简称为集）用一系列的大写字母来表示。当两个集合的元素种类完全相等时，称两集合相等。我们把一个元素都没有的集合叫做<em>空集</em>，表示为$\phi$</p>
+<p><strong>集合的分类</strong></p>
+<ul>
+<li>集合
+<ul>
+<li>按元素多少
+<ul>
+<li>有限集</li>
+<li>无限集</li>
+</ul>
+</li>
+<li>按元素属性
+<ul>
+<li>数集</li>
+<li>点集</li>
+<li>其他集</li>
+<li>····</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="%E5%85%83%E7%B4%A0%E4%B8%8E%E9%9B%86%E5%90%88%E7%9A%84%E5%85%B3%E7%B3%BB">元素与集合的关系</h3>
+<p>集合和元素之间显然是有关系的，集合是由元素组成的，集合是包含元素的，所以对于一个元素$a$和集合$A$，存在如下两种关系
+$$a\in A$$
+$$a\notin A$$
+分别表示属于和不属于
+属于意味着$A$中有$a$元素，反之没有这个元素</p>
+<h3 id="%E9%9B%86%E5%90%88%E4%B8%AD%E5%85%83%E7%B4%A0%E7%89%B9%E6%80%A7">集合中元素特性</h3>
+<p>集合中的元素包含有以下的三个特性</p>
+<ol>
+<li>确定性</li>
+<li>互异性</li>
+<li>无序性</li>
+</ol>
+<p>我们依次解释</p>
+<p><strong>确定性</strong>：这点是明确的，对于一个元素$a$，它只能有两种状态，要么属于集合，要么不属于集合，不会存在又属于又不属于的情况。</p>
+<p><strong>互异性</strong>：集合中的元素是互不相同的，同一种元素在集合中只可以出现一次。</p>
+<p><strong>无序性</strong>：集合中的元素是没有先后顺序的，任意调换次序我们认为集合是不变的。</p>
+<h3 id="%E9%9B%86%E5%90%88%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95">集合的表示方法</h3>
+<p>对于集合，可以有如下的几种数学上的表示方法</p>
+<ul>
+<li>列举法
+<ul>
+<li>把集合中所有的元素列出，用逗号隔开，并且使用<code>{ }</code>括起来表示集合</li>
+<li>例：{1,2,3,4}</li>
+</ul>
+</li>
+<li>描述法
+<ul>
+<li>用元素的共同特征来表示集合，其基本形式为{$x\in A|P(x)$}，其中$P(x)$表示集合元素的共同特征</li>
+<li>例：{$x\in Z|0&lt;x&lt;4$}=={2,3}</li>
+</ul>
+</li>
+<li>图示法（韦恩图）
+<ul>
+<li>用一条封闭曲线的内部表示一个集合</li>
+</ul>
+</li>
+</ul>
+<p><strong>常见的集合符号</strong></p>
+<ul>
+<li>$N$ 表示非负整数集，也叫自然数集</li>
+<li>$N^*$/$N_+$ 表示正整数集</li>
+<li>$Z$ 表示整数集</li>
+<li>$Q$ 表示有理数集</li>
+<li>$R$ 表示实数集</li>
+<li>$C$ 表示复数集</li>
+</ul>
+<h2 id="2%E9%9B%86%E5%90%88%E9%97%B4%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%85%B3%E7%B3%BB">2.集合间的基本关系</h2>
+<p>不同的集合之间存在大小关系，包含关系。我们定义以下一些内容</p>
+<h3 id="%E5%AD%90%E9%9B%86">子集</h3>
+<p>一般地，对于两个集合$A，B$如果集合$A$中任意一个元素都是集合$B$中的元素，就称两集合存在包含关系，并且称其为$A$包含于$B$，或者$B$包含$A$,数学表示为
+$$A\subseteq B$$</p>
+<p>子集有如下一些性质</p>
+<ol>
+<li>反身性：任何一个集合是它自己的子集，$A\subseteq A$</li>
+<li>传递性：对于集合$A,B,C$，由$A\subseteq B$,$B\subseteq C$可得$A\subseteq C$</li>
+</ol>
+<p><strong>集合相等</strong>：一般的，如果$A\subseteq B$且$B\subseteq A$，则$A=B$</p>
+<h3 id="%E7%9C%9F%E5%AD%90%E9%9B%86">真子集</h3>
+<p>如果集合$A$是集合$B$的子集，且在集合$B$中至少的存在一个元素不是集合$A$中的元素，就称集合$A$是集合$B$的真子集。数学上写作
+$$A\subsetneq B$$</p>
+<h3 id="%E7%A9%BA%E9%9B%86">空集</h3>
+<p>把不含任何元素的集合叫做空集，记为$\phi$</p>
+<p><strong>空集的特点</strong>：空集是任何集合的子集，且空集是任何非空集合的真子集</p>
+<h2 id="3%E9%9B%86%E5%90%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97">3.集合的基本运算</h2>
+<p>集合之间可以进行几种基本运算。</p>
+<h3 id="%E5%B9%B6%E9%9B%86">并集</h3>
+<p>一般的，由所有属于集合$A$或属于集合$B$的元素组成的集合称为集合$A$与集合$B$的并集。数学上写作
+$$A\cup B$$</p>
+<p><strong>并集的几种性质</strong></p>
+<ul>
+<li>$A\cup B=B\cup A$</li>
+<li>$A\cup A=A$</li>
+<li>$A\cup\phi=\phi\cup A=A$</li>
+<li>$A\cup(B \cup C)=(A\cup B)\cup C$</li>
+<li>$A\subseteq (A\cup B),B\subseteq(A\cup B)$</li>
+<li>$B\subseteq A\Leftrightarrow A\cup B=A$</li>
+</ul>
+<h3 id="%E4%BA%A4%E9%9B%86">交集</h3>
+<p>一般的，由属于集合$A$且属于集合$B$的所有元素组成的集合，称为集合$A$与$B$的交集。数学上写作
+$$A\cap B$$</p>
+<p><strong>交集的几种性质</strong></p>
+<ul>
+<li>$A\cap B=B\cap A$</li>
+<li>$A\cap A=A$</li>
+<li>$A\cap\phi=\phi\cap A=\phi$</li>
+<li>$A\cap(B \cap C)=(A\cap B)\cap C$</li>
+<li>$(A\cap B)\subseteq A,(A\cap B)\subseteq B$</li>
+<li>$A\subseteq B\Leftrightarrow A\cap B=A$</li>
+</ul>
+<h3 id="%E5%85%A8%E9%9B%86">全集</h3>
+<p>一般的，如果一个集合含有我们所研究问题中涉及的所有元素，那么就称这个集合为全集。数学上记为$U$</p>
+<h3 id="%E8%A1%A5%E9%9B%86">补集</h3>
+<p>对于一个集合$A$，由全集$U$中不属于集合$A$的所有元素组成的集合称为集合$A$相对于全集$U$的补集。数学上记为，$A^{\mathrm{U}}$（书上的符号打不出来，我们先这样记吧）</p>
+<p><strong>补集和全集之间的一些关系</strong></p>
+<ul>
+<li>$A\cap A^{\mathrm{U}}=U$</li>
+<li>$A\cup A^{\mathrm{U}}=\phi$</li>
+<li>$(A^{\mathrm{U}})^{\mathrm{{U}}}=A$</li>
+<li>$U^{\mathrm{U}}=\phi,\phi^{\mathrm{U}}=U$</li>
+</ul>
+</div>
+</body>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script>
+
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>math_vec_5.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<!--数学2020.7.9-->
+<link rel="stylesheet" href="markit.css"></link>
+<h1 id="%E7%AC%AC5%E7%AB%A0-%E5%B9%B3%E9%9D%A2%E5%90%91%E9%87%8F">第5章 平面向量</h1>
+<h2>目录</h2>
+<ul>
+<li><a href="#%E7%AC%AC5%E7%AB%A0-%E5%B9%B3%E9%9D%A2%E5%90%91%E9%87%8F">第5章 平面向量</a>
+<ul>
+<li><a href="#%E5%90%91%E9%87%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">向量的基本概念</a></li>
+<li><a href="#%E5%90%91%E9%87%8F%E7%9A%84%E8%A1%A8%E7%A4%BA">向量的表示</a></li>
+<li><a href="#%E5%90%91%E9%87%8F%E7%9A%84%E8%BF%90%E7%AE%97">向量的运算</a>
+<ul>
+<li><a href="#%E5%90%91%E9%87%8F%E5%8A%A0%E5%87%8F%E6%B3%95">向量加减法</a></li>
+<li><a href="#%E5%90%91%E9%87%8F%E6%95%B0%E4%B9%98">向量数乘</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B9%B3%E9%9D%A2%E5%90%91%E9%87%8F%E7%9A%84%E5%85%B1%E7%BA%BF%E5%AE%9A%E7%90%86">平面向量的共线定理</a></li>
+<li><a href="#%E5%90%91%E9%87%8F%E7%9A%84%E6%95%B0%E9%87%8F%E7%A7%AF-%E7%82%B9%E7%A7%AF">向量的数量积 点积</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>什么是向量</strong></p>
+<p>我们一般说，既有方向又有大小的量叫做<strong>向量</strong> 。与之相对的，我们平时说的就叫做数量。数量是一个<strong>代数量</strong>，是一个只有大小没有方向的量。</p>
+<p><strong>向量是怎么来的</strong></p>
+<p>向量这个概念其实是从物理中来的，物理中有很多的物理量是矢量的形式，也就是至少具有方向和大小的物理量，我们把它们抽象为数学语言上的向量。
+所以说物理上说的矢量，在一定程度上就与数学中的向量是一个意思。（但是单位等其他属性是向量没有的，所以也不能简单等于）</p>
+<h2 id="%E5%90%91%E9%87%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">向量的基本概念</h2>
+<ol>
+<li>
+<p><strong>什么是向量</strong></p>
+<p>楼上已经说过</p>
+</li>
+<li>
+<p><strong>向量的大小</strong></p>
+<p>向量是可以比大小的，我们把向量的大小叫做向量的长度，也叫做向量的<strong>模</strong></p>
+</li>
+<li>
+<p><strong>最小的向量</strong></p>
+<p>零向量，零向量是<strong>模为0</strong>的向量，它还有一个特性，<strong>方向不定性</strong>，也就是方向是不确定的，可以是<strong>任意方向</strong></p>
+</li>
+<li>
+<p><strong>表示方向的向量</strong></p>
+<p>单位向量，单位向量是指<strong>模为1</strong>的向量，它指示一个方向（这个概念比较物理，当然可以练习数学中的坐标来理解）</p>
+</li>
+<li>
+<p><strong>相等向量，相反向量，平行向量（共线向量）</strong></p>
+<p>相等向量是指长度相等，方向相同的向量
+相反向量是指长度相等，方向相反的向量
+平行向量是指方向相同或相反（无长度要求）的向量，也被称为共线向量</p>
+<p><strong>Qusetion</strong>：零向量和任何向量都是平行向量吗</p>
+<p><strong>Answer</strong>  ： 是的，这是人为规定的，零向量和任何向量平行，这个规定不允许零向量垂直于任何向量。</p>
+</li>
+</ol>
+<p><strong>一个值得注意的地方</strong></p>
+<p>向量是一个有方向有大小的量，但是它不是个有起点的量。也就是同一个向量，在一个平面空间表示时，有无数个。（这点要记住，之后慢慢理解）</p>
+<h2 id="%E5%90%91%E9%87%8F%E7%9A%84%E8%A1%A8%E7%A4%BA">向量的表示</h2>
+<p>向量有如下一些表示的方法</p>
+<ul>
+<li>几何表示法：也就是用以段有向线段来表示向量，有向线段的起点为向量起点，有向线段的终点是向量终点。（画个箭头，由起点指向终点）</li>
+<li>字母表示法：$\vec{a}$我们用一个头上带箭头的字母表示向量,用一个长得像绝对值的符号（但是其实含义不是绝对值）$|\vec{a}|$表示向量的模(书本用加粗体表示)</li>
+<li>点表示法：向量也可以用两个点位置来表示例如$\vec{AB}$表示从A点指向B点的一个向量，其模的表示和字母表示法类似$|\vec{AB}|$</li>
+</ul>
+<p><strong>几何表示注意点</strong></p>
+<p>向量无起点，有向线段有起点</p>
+<p>有了字母表示法，我们就可以做一些数学上的表示了，针对前文的向量概念，我们用数学进行表示
+对于零向量
+$$|\vec{0}|=0$$
+我们一般用$\hat{a}$一个带小三角的字母表示某向量的单位向量
+$$\hat{a}=\frac{\vec{a}}{|\vec{a}|}$$
+向量之间的关系，我们可以有如下一些数学表示</p>
+<ul>
+<li>（相等向量）$\vec{a}=\vec{b}$</li>
+<li>（相反向量）$\vec{a}=-\vec{b}$</li>
+<li>（平行向量）$\vec{a}//\vec{b}$</li>
+</ul>
+<p>自此，我们非常简单的了解了向量和其表示法，以及一些基础的定义和概念。注意，我们至此都从没说过向量是一个平面上的东西，也没有说过向量等于有向线段，虽然我们在纸上这样画的时候看着是平面的，看着像有向线段，但是向量从来不是只有平面的也不是只有向线段。希望可以建立一个概念，平面向量只是向量的一个特殊情况，有向线段只是我们为了方便理解的可视化工具。之后我们会推广，一直到我们不可理解的维数，建立向量是一个数学量的概念，是一个有方向有大小的量。</p>
+<h2 id="%E5%90%91%E9%87%8F%E7%9A%84%E8%BF%90%E7%AE%97">向量的运算</h2>
+<p>为了方便理解，现在我们把目光锁定在平面向量，也就是“可以被画在纸上“的向量。
+接下来会分别介绍向量的加、减、数乘，这三种运算都是属于向量的线性运算</p>
+<p><strong>向量平移</strong></p>
+<p>我们先理解这点，因为向量是只有大小和方向的量，没有起点，所以在平面上，向量是可以任意移动的，只要大小和方向不变，它们就是相等的。</p>
+<h4 id="%E5%90%91%E9%87%8F%E5%8A%A0%E5%87%8F%E6%B3%95">向量加减法</h4>
+<p>当我们定义了向量的加法之后，向量的减法其实就可以被理解为原向量加上了一个相反向量。所以我们现在只考虑加法，把向量的加法进行定义。</p>
+<p><em>定义1:求两个向量和的运算叫向量的加法，两个向量的和仍然是向量</em></p>
+<p>人们定义，平面向量的加法遵循三角形法则和平行四边形法则。这两个法则其实是一样的，（我也不知道为什么人们喜欢换个名字叫）。接下来我先解释三角形法则</p>
+<p><strong>三角形法则</strong></p>
+<p>这个法则很简单，假设$\vec{a}+\vec{b}$，那么，将$\vec{b}$平移到其起始位置与$\vec{a}$的末尾位置重合，连接$\vec{a},\vec{b}$的起始和末尾，所连接的向量就是两个向量的和</p>
+<p><strong>平行四边形法则</strong></p>
+<p>和三角形一样，无非是现在它们共起点了，所以取其构成的平行四边形的同起点对角线为和</p>
+<p><strong>多向量相加</strong></p>
+<p>其实就是不断的两向量加和重复进行，那么很容易我们就发现，把所有的向量首尾相接，起始到末尾的向量就是其和</p>
+<p>对于加法，我们从上诉法则里面可以发现总结下面的规律</p>
+<ul>
+<li>$\vec{a}+\vec{0}=\vec{0}+\vec{a}=\vec{a}$</li>
+<li>$\vec{a}+\vec{b}=\vec{b}+\vec{a}$</li>
+<li>$(\vec{a}+\vec{b})+\vec{c}=\vec{a}+(\vec{b}+\vec{c})$</li>
+</ul>
+<p>加法定义完成，减法就是加上一个相反向量，以上规律全部满足
+$$\vec{a}+(\vec{-b})=\vec{a}-\vec{b}$$</p>
+<h4 id="%E5%90%91%E9%87%8F%E6%95%B0%E4%B9%98">向量数乘</h4>
+<p>向量的数乘是指一个向量乘上一个数量（希望已经分清楚来向量和数量的概念）</p>
+<p>我们假设$\lambda$是一个实数，$\vec{a}$是一个向量，有如下一些计算定义</p>
+<ul>
+<li>$|\lambda \vec{a}|=|\lambda||\vec{a}|$</li>
+<li>当$\lambda=0$或$\vec{a}=\vec{0}$，$\lambda \vec{a}=\vec{0}$</li>
+<li>当$\lambda&lt;0$，$\lambda\vec{a}$与$\vec{a}$方向相反</li>
+<li>当$\lambda&gt;0$，$\lambda\vec{a}$与$\vec{a}$方向相同</li>
+</ul>
+<p>以上定义了结果向量的大小和方向，根据此，还可以得到如下的式子</p>
+<p>假设$\lambda,\mu$是实数，$\vec{a},\vec{b}$是向量</p>
+<ul>
+<li>$\lambda(\mu\vec{a})=(\lambda\mu)\vec{a}$</li>
+<li>$(\lambda+\mu)\vec{a}=\lambda\vec{a}+\mu\vec{a}$</li>
+<li>$\lambda(\vec{a}+\vec{b})=\lambda\vec{a}+\lambda\vec{b}$</li>
+</ul>
+<p>这样线性运算部分就全部定义完了，接下来要接触一个向量的定理：平面向量的共线定理</p>
+<h2 id="%E5%B9%B3%E9%9D%A2%E5%90%91%E9%87%8F%E7%9A%84%E5%85%B1%E7%BA%BF%E5%AE%9A%E7%90%86">平面向量的共线定理</h2>
+<p>我们先把定理列出来</p>
+<p><strong>定理</strong>：向量$\vec{a}(\vec{a}\neq\vec{0})$与$\vec{b}$共线的充要条件是存在唯一一个实数$\lambda$，使$\vec{b}=\lambda\vec{a}$</p>
+<p><strong>充要条件的理解</strong></p>
+<p>也就是，这个定理可以被如下理解</p>
+<ul>
+<li>如果存在一个$\lambda$使$\vec{b}=\lambda\vec{a}$,则有$\vec{a}//\vec{b}$</li>
+<li>如果$\vec{a}//\vec{b}$且$\vec{a}\neq\vec{0}$,则存在唯一一个实数$\lambda$使$\vec{b}=\lambda\vec{a}$成立</li>
+</ul>
+<p><strong>推论1</strong>：若存在一对实数$t,s$使$t\vec{a}+s\vec{b}=\vec{0}$则它们共线。</p>
+<p><strong>推论2</strong>：若两个非零向量$\vec{a},\vec{b}$不共线，且$t\vec{a}+s\vec{b}=\vec{0}$则有$t=s=0$</p>
+<p><strong>推论3</strong>：若$\vec{OA}=\lambda\vec{OB}+\mu\vec{OC}$且$\lambda+\mu=1$则$A,B,C$三点共线</p>
+<p><strong>向量与三角形</strong>
+中点公式
+重心公式</p>
+<h2 id="%E5%90%91%E9%87%8F%E7%9A%84%E6%95%B0%E9%87%8F%E7%A7%AF-%E7%82%B9%E7%A7%AF">向量的数量积 点积</h2>
+<p>向量的数量积也是源于物理意义的，两个向量的数量积是一个数量，我们用如下表示$\vec{a}·\vec{b}$</p>
+<p><strong>向量的夹角</strong></p>
+<p>为了理解数量积，我们要先理解向量的夹角，做向量$\vec{OA}$和$\vec{OB}$显然有$\angle AOB$为向量的夹角。有一下注意</p>
+<ul>
+<li>$\angle AOB=\theta(0&lt;=\theta&lt;=\pi)$</li>
+<li>$\theta=0,\pi,\frac{\pi}{2}$对应于同向，反向，垂直</li>
+</ul>
+<p><strong>定义数量积</strong></p>
+<p>我们对两个向量的数量积做如下定义
+$$\vec{a}·\vec{b}=|\vec{a}||\vec{b}|\cos\theta$$</p>
+<p>注意：零向量与任何向量的数量积为0（数量0）</p>
+
+</body>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script>
+
+</html>

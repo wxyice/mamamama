@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>跳动的心</title>
+ 	<style>
+ 	body{
+ 		background:rgba(250,60,60,0.5);
+ 	}
+	div{
+		width: 200px;
+		height: 200px;
+		background-color: red;
+		margin: 300px auto;
+		transform: rotate(45deg);
+		opacity: 0.5;
+		filter: drop-shadow(0px 0px 30px red);
+		box-shadow: 0px 0px 30px red;
+		animation: m 0.8s linear infinite;
+	}
+	@keyframes m{
+		50%{transform: rotate(45deg) scale(0.8,0.8);}
+	
+		80%{transform: rotate(45deg) scale(0.7,0.7);}
+	}
+	div:after{
+		content: "";
+		width:200px;
+		height: 200px;
+		background-color:red;
+		position: relative;
+		display: block;
+		border-radius: 50%;
+		top: -300px;
+		left: 0px;
+	}
+	div:before{
+		content: "";
+		width:200px;
+		height: 200px;
+		background-color:red;
+		position: relative;
+		display: block;
+		border-radius: 50%;
+		top: 0px;
+		left: -100px;
+	}
+	p{
+		font-family:楷体;
+	}
+	</style>
+ </head>
+ <body>
+ 	<p>世人谓我恋长安，其实只恋长安某</p>
+	<div></div>
+ </body>
+ </html>
+————————————————
+版权声明：本文为CSDN博主「河北颜良」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/zhe06/article/details/105933192
