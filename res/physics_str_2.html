@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>physics_str_2.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<link rel="stylesheet" href="markit.css"></link>
+<h1 id="%E5%8C%80%E9%80%9F%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8">匀速变速直线运动</h1>
+<h2>目录</h2>
+<ul>
+<li><a href="#%E5%8C%80%E9%80%9F%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8">匀速变速直线运动</a>
+<ul>
+<li><a href="#%E5%AE%9A%E4%B9%89">定义</a></li>
+<li><a href="#%E5%8C%80%E5%8F%98%E9%80%9F%E8%BF%90%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%85%B3%E9%94%AE%E5%85%B3%E7%B3%BB">匀变速运动的几种关键关系</a></li>
+<li><a href="#%E7%89%B9%E6%AE%8A%E9%80%9F%E5%BA%A6">特殊速度</a></li>
+<li><a href="#%E9%87%8D%E8%A6%81%E6%8E%A8%E8%AE%BA">重要推论</a></li>
+<li><a href="#%E5%AE%9E%E9%AA%8C%E6%8E%A2%E7%A9%B6%E5%B0%8F%E8%BD%A6%E9%80%9F%E5%BA%A6%E9%9A%8F%E6%97%B6%E9%97%B4%E7%9A%84%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B">实验：探究小车速度随时间的变化规律</a></li>
+<li><a href="#%E7%89%B9%E6%AE%8A%E7%9A%84%E5%8C%80%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8">特殊的匀变速直线运动</a></li>
+<li><a href="#%E5%85%B3%E4%BA%8E%E5%81%9A%E9%A2%98">关于做题</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="%E5%AE%9A%E4%B9%89">定义</h2>
+<ul>
+<li>沿直线，加速度不变的运动</li>
+<li>变速直线运动中，<strong>任意</strong>相等时间内速度的改变量相等</li>
+</ul>
+<p><strong>类型</strong></p>
+<ol>
+<li>匀加速直线运动</li>
+<li>匀减速直线运动</li>
+</ol>
+<h2 id="%E5%8C%80%E5%8F%98%E9%80%9F%E8%BF%90%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%85%B3%E9%94%AE%E5%85%B3%E7%B3%BB">匀变速运动的几种关键关系</h2>
+<ol>
+<li>速度和时间变化关系
+<ol>
+<li>公式
+<ol>
+<li>正负号的意义</li>
+</ol>
+</li>
+<li>图像
+<ol>
+<li>图像上物理意义的解释</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>位移和时间变化关系
+<ol>
+<li>公式</li>
+<li>图像
+<ol>
+<li>位移时间图像的意义</li>
+<li>在速度位移图像上的物理意义</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>由上面两个关系推导速度位移关系
+<ol>
+<li>公式</li>
+</ol>
+</li>
+</ol>
+<h2 id="%E7%89%B9%E6%AE%8A%E9%80%9F%E5%BA%A6">特殊速度</h2>
+<ol>
+<li>时间中点速度</li>
+<li>位移中点速度</li>
+</ol>
+<h2 id="%E9%87%8D%E8%A6%81%E6%8E%A8%E8%AE%BA">重要推论</h2>
+<ol>
+<li>匀变速直线运动中，在连续相等的时间间隔T内的位移之差为一个恒量，也就是$\Delta x=aT^2$</li>
+<li>匀变速直线运动中，某段时间内中间时刻的瞬时速度等于这段时间内的平均速度</li>
+<li>初速度为0的匀加速直线运动的比例关系——推导（根据1推导）</li>
+</ol>
+<h2 id="%E5%AE%9E%E9%AA%8C%E6%8E%A2%E7%A9%B6%E5%B0%8F%E8%BD%A6%E9%80%9F%E5%BA%A6%E9%9A%8F%E6%97%B6%E9%97%B4%E7%9A%84%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B">实验：探究小车速度随时间的变化规律</h2>
+<p>要求：熟悉实验器材，熟悉实验过程，熟悉实验的数据处理</p>
+<h2 id="%E7%89%B9%E6%AE%8A%E7%9A%84%E5%8C%80%E5%8F%98%E9%80%9F%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8">特殊的匀变速直线运动</h2>
+<p>自由落体，竖直上抛</p>
+<ol>
+<li>自由落体
+<ol>
+<li>定义</li>
+<li>加速度</li>
+</ol>
+</li>
+<li>竖直上抛
+<ol>
+<li>定义</li>
+</ol>
+</li>
+</ol>
+<p>速度时间公式
+位移时间公式
+速度位移公式</p>
+<h2 id="%E5%85%B3%E4%BA%8E%E5%81%9A%E9%A2%98">关于做题</h2>
+<ol>
+<li>画图</li>
+<li>列公式</li>
+<li>求解</li>
+</ol>
+<p>一共有x，v，a，t四个物理量
+有3个公式
+知道两个必然可以求其余两个量</p>
+
+</body>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script>
+
+</html>
