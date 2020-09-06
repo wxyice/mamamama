@@ -2,36 +2,37 @@
 「」联想
 EE:英文解释
 Eg:例句
-# 2020.8.18
-obesity 
-chronic diseases 
-indicator 
-cholesterol
-impartment 
-cognitive
-conspicuously
-deficit
-desgnate
-digestion 
-    ==> digest
-excel
-indulge 
-    「drug」
-loophole 
-    loop·hole
-redundant
-drastically
-monopolize 
-strengthen
-minimal
-critically 
-    ==>critical [important]
-sentence 【n. 判决】
-penalty 
-    ==>penalties
-overburdened
 
-# 2020.8.19
+2020.8.18
+[word] obesity 
+[word] chronic diseases 
+[word] indicator 
+[word] cholesterol
+[word] impartment 
+[word] cognitive
+[word] conspicuously
+[word] deficit
+[word] desgnate
+[word] digestion 
+        ==> digest
+[word] excel
+[word] indulge 
+        「drug」
+[word] loophole 
+        loop·hole
+[word] redundant
+[word] drastically
+[word] monopolize 
+[word] strengthen
+[word] minimal
+[word] critically 
+        ==>critical [important]
+[word] sentence 【n. 判决】
+[word] penalty 
+        ==>penalties
+[word] overburdened
+
+2020.8.19
 [word] enroll
 [word] cultivate 
 [word] indicate 
@@ -73,11 +74,11 @@ overburdened
         The signs do nothing more than identify a restaurant but do so in the most striking way possible.
         EE: do nothing more than it ,but do so in the best way
 
+2020.8.21
+[word]
 
 
-
-
-# 多义词
+多义词
 level [n,v]
 graduating [n,v]
 peak [n,v]

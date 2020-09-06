@@ -177,7 +177,7 @@ body .container .left .footer {
     box-shadow: 0 10px 40px 0px rgba(5, 5, 5);
 }
 
-body .container .xjj{
+/* body .container .xjj{
   border-radius: 15px;
   height: 20%;
   display: -webkit-box;
@@ -193,8 +193,8 @@ body .container .xjj div {
   max-width: 100%;
   margin: 5% auto;
   /* margin-right: 5% auto; */
-  border-radius: 15px;
-}
+  /*border-radius: 15px;
+} */
 
 img {
   max-width: 100%;
@@ -208,13 +208,21 @@ body .English{
   background-color: #f8f8f8;
   box-shadow: 0 10px 40px 0px rgba(5, 5, 5);
 }
+body .DDD{
+  padding: 20px;
+  margin-top: 20px;
+  /* opacity: 0.5; */
+  border-radius: 15px;
+  background-color: #f8f8f8;
+  box-shadow: 0 10px 40px 0px rgba(5, 5, 5);
+}
 
 
-/* img {
+img {
   max-width: 100%;
-} */
+}
 
-/* body .container .right .xjj {
+body .container .right .xjj {
   position: fixed;
   top: 200px;
   left: 100px;
@@ -227,7 +235,7 @@ body .container .right .xjj :hover {
   left: 0px;
   width: 400px;
   height: auto;
-} */
+}
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
