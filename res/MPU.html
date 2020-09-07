@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MPU.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E8%80%83%E8%AF%95%E8%A6%81%E6%B1%82">考试要求</h1>
+<p>考试题型</p>
+<ol>
+<li>填空 涉及计算  20个</li>
+<li>简答         3-4个</li>
+<li>程序分析      3-4个</li>
+<li>编程题  4个</li>
+</ol>
+<h1 id="%E9%87%8D%E7%82%B9">重点</h1>
+<ol>
+<li>
+<p>单片机系统的基本知识</p>
+<ol>
+<li>
+<p>基本概念
+记忆</p>
+<ol>
+<li>单片机负责完成从输入设备信号到输出设备动作驱动信号的转换和控制。</li>
+<li>存在单片机的地方</li>
+<li>AT89C51</li>
+<li>（单片）微型计算机（MP）（MC）：微处理器（CPU）（运算器+控制器）+程序存储器（ROM）+数据存储器（RAM）+I/O输出输出电路+时钟+计算机外围电路</li>
+<li>微处理器（CPU）（MPU）</li>
+<li>单片机（MCU）：Single Chip Microcomputer 将微型计算机的各功能部件微型化并集成到一块集成电路芯片上，也称单片微型计算机、微控制器、嵌入式微控制器。</li>
+<li>1976-1990</li>
+<li>嵌入式系统：以应用技术产品为核心
+以计算机技术为基础
+以通信技术为载体
+以消费类产品为对象
+引入各种传感器
+进入Internet网络技术的连接
+适应应用环境的产品</li>
+</ol>
+</li>
+<li>
+<p>特点：</p>
+<ol>
+<li>体积小 使用灵活 成本低 易于产业化</li>
+<li>可靠性好 适应温度范围广</li>
+<li>易扩展</li>
+<li>系统内无监控或系统管理程序</li>
+</ol>
+</li>
+<li>
+<p>发展趋势</p>
+<ol>
+<li>CMOS</li>
+<li>低功耗</li>
+<li>低噪声 高可靠性</li>
+<li>大容量</li>
+<li>高性能</li>
+<li>片内功能丰富</li>
+<li>引脚少</li>
+</ol>
+</li>
+<li>
+<p>应用：</p>
+<ol>
+<li>在智能仪表中的应用</li>
+<li>机电一体化</li>
+<li>实时控制</li>
+<li>智能家电</li>
+<li>物联网</li>
+</ol>
+</li>
+<li>
+<p>数制</p>
+<ol>
+<li>常用数制（D，B，H）
+基：数制中使用数码的个数
+权：每一位所代表的值</li>
+<li>数制转换
+B&lt;-&gt;H
+4位换1位
+B-&gt;D/H-&gt;D
+按权转
+D-&gt;B/H
+连续除基
+记下余数
+逆序排列</li>
+</ol>
+</li>
+<li>
+<p>码制</p>
+<ol>
+<li>
+<p>有符号数
+最高位为“0”表示正数，最高位为“1”表示负数
+有符号数的范围
+-128～+127
+1111 1111 ～ 0111 1111</p>
+</li>
+<li>
+<p>机器数
+把数码化的有符号数称为“机器数”，原来的数称为“真值”
+原码
+反码
+补码</p>
+<p>对于正数
+原码=反码=补码
+对于负数
+反码等于原码符号位不变 数值按位取反
+补码=反码+1</p>
+<p>补码连符号位一起取反加1=其相反数的补码
+=》负数的补码变为其绝对值正数</p>
+</li>
+<li>
+<p>有符号数的运算
+计算机中普遍用补码表示有符号数，因无论是加法还是减法，都可采用加法运算</p>
+<p>求负数的补码可以先写正数原码，减一全取反就可以</p>
+<p>正负数全都用补码运算 得到的结果 负数做一次补码运算就是负数原码，正数就是这个数
+负数的补码的补码是自己</p>
+</li>
+</ol>
+</li>
+<li>
+<p>编码
+BCD码：
+采用4位二进制数来储存一个十进制的数码，使二进制和十进制之间的转换得以快捷的进行
+压缩BCD码：
+一个BCD码占4位，而一个字节有8位。把2个BCD码放在一个字节中，就叫压缩的BCD码，而一个字节只放一个BCD码，高位置0，则叫非压缩的BCD码
+ASCII码：（美国信息交换标准代码）
+是字母、数字、常用的符号（例如*、#、@等）在计算机中存储时对应的二进制数表示，是人为制定的一套编码
+0～9
+前4位为0011 后4位为0000～1001</p>
+</li>
+<li>
+<p>存储器
+容量
+bit： 比特 0/1
+Byte：8位
+Word：16位
+1KB=1024bytes
+1MB=1024KB
+每个单元都有自己唯一的地址
+速度 一般为几十~几百ns</p>
+<p>类型
+ROM 只读
+PROM 可编程
+EPROM 可改写
+EEPROM 电可改写
+FLASH闪存
+RAM
+SRAM
+DRAM</p>
+<p>地址和数据
+地址可用8位二进制数表示（寻址256个单元，用于片内RAM），也可用16位表示（最大寻址64K个单元，用于片内和片外程序存储器，以及片外数据存储器寻址）</p>
+</li>
+</ol>
+</li>
+<li>
+<p>单片机的结构和原理</p>
+<ul>
+<li>
+<p>80C51 结构</p>
+<ol>
+<li>80C51CPU</li>
+<li>ROM 4KB/RAM 256B</li>
+<li>定时/计数器 2个16位   (T0,T1)</li>
+<li>可编程I/O口          (P0,P1,P2,P3)</li>
+<li>振荡器和时序</li>
+<li>中断控制器            (INT0,INT1)</li>
+<li>64KB扩展控制器        (ALE/PROG，PSEN)</li>
+<li>可编程全双工串行口     (TXD,RXD)</li>
+</ol>
+</li>
+<li>
+<p>80C51CPU结构</p>
+<ol>
+<li>
+<p>运算器</p>
+<ol>
+<li>
+<p>ALU 算数逻辑单元</p>
+</li>
+<li>
+<p>ACC (Accumulator) 8位
+参与运算</p>
+</li>
+<li>
+<p>B 寄存器           8位
+参与乘法 ACC，B 中各放一个8位数
+乘积的高8位B中 低8位ACC中</p>
+</li>
+<li>
+<p>暂存器1 暂存器2</p>
+</li>
+<li>
+<p>布尔处理器</p>
+</li>
+<li>
+<p>PSW (Program Status Word) 8位
+上面有7个反应CPU状态的量
+B7  B6  B5  B4  B3  B2  B1  B0
+CY  AC  F0  RS1 RS0 OV  保留 P</p>
+<p>CY:进位标志 无符号数溢出
+AC:半进位标志
+OV:溢出标志 有符号数溢出
+P: 奇偶标志 ACC中1的个数奇数P=1</p>
+<p>RS1 RS2 :工作组选择</p>
+</li>
+</ol>
+</li>
+<li>
+<p>控制器</p>
+<ol>
+<li>定时控制逻辑</li>
+<li>PC   (Program Counter) 16位
+存放下一条指令的地址
+物理上独立 用户无法直接访问</li>
+<li>指令寄存器</li>
+<li>指令译码器</li>
+<li>DPTR (Data Pointer Register)</li>
+<li>信息传送控制部件</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>存储机制</p>
+<ol>
+<li>
+<p>内部RAM
+80C51 有256个字节的RAM 前128个用户RAM
+后128 特殊功能寄存器 SFR 用了21个</p>
+</li>
+<li>
+<p>内部ROM
+80C31内部无ROM
+80C32内部无ROM</p>
+<p>80C51内部共有4KB的ROM
+87C51内部共有4KB的EPROM
+89C51内部共有4KB的Flash</p>
+<p>80C52内部共有8KB的ROM
+87C52内部共有8KB的EPROM
+89C52内部共有8KB的Flash</p>
+</li>
+</ol>
+</li>
+<li>
+<p>并行I/O
+80C51内部有4个8位I/O口P0, P1, P2, P3</p>
+</li>
+<li>
+<p>串行I/O口
+80C51内部有1个全双工、可编程串行口
+全双工：任意时刻均可同时收、发
+半双工：同一时刻只能收或发
+单工：只能收或只能发</p>
+</li>
+<li>
+<p>时钟
+80C51内部有时钟电路，但晶振和微调电容需外接</p>
+</li>
+<li>
+<p>定时/计数
+80C51内部有2个16位定时/计数器</p>
+</li>
+<li>
+<p>中断
+80C51共有5个中断源：
+2个外部中断源
+2个定时/计数器中断源
+1个串行口中断源</p>
+</li>
+<li>
+<p>80C51 引脚</p>
+<ol>
+<li>电源VCC 和VSS（GND）</li>
+<li>时钟电路XTAL1 和XTAL2</li>
+<li>I/O口引脚P0，P1，P2，P3口，均可作为通用I/O口</li>
+</ol>
+<p>第二功能</p>
+<ol>
+<li>地址总线低8位，数据总线</li>
+<li>地址总线高8位</li>
+<li>RXD:串行接收,
+TXD:串行发送；
+INT0，INT1:外部中断0，1；
+T0，T1:外部计数输入0，1；
+WR:外部RAM写选通；
+RD:外部RAM读选通（这里有问题）</li>
+<li>控制信号
+RST－2个机器周期（24个振荡周期）高电平时复位
+EA(External Address Enable)
+EA=0，全部使用外部ROM
+EA=1，低地址使用内部ROM
+ALE(Address Latch Enable)地址锁存允许（接外部锁存器EN端）
+ALE=1, P0口的内容为地址低8位
+PSEN(Program Store Enable)外部ROM读选通</li>
+</ol>
+</li>
+<li>
+<p>计算机结构</p>
+<ul>
+<li>
+<p>哈佛结构</p>
+<ul>
+<li>程序和数据存储器有各自的寻址方法 寻址空间 控制系统
+80C51用哈佛结构</li>
+</ul>
+</li>
+<li>
+<p>冯诺伊曼结构</p>
+<ul>
+<li>将指令、数据存储在同一存储器中并统一编址，依靠指令计数器提供的地址来区分指令和数据。数据吞吐率低，但数据线少。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>程序寄存器</p>
+<ul>
+<li>0000H－复位后程序的入口地址</li>
+<li>0003H－外部中断0中断服务程序入口地址</li>
+<li>000BH－定时/计数器0中断服务程序入口地址</li>
+<li>0013H－外部中断1中断服务程序入口地址</li>
+<li>001BH－定时/计数器1中断服务程序入口地址</li>
+<li>0023H－串行口中断服务程序入口地址</li>
+</ul>
+<p>内部4K<br>
+当EA/VPP=1 用
+当EA/VPP=0 不用内部</p>
+</li>
+<li>
+<p>数据存储器</p>
+<ul>
+<li>
+<p>内部RAM
+前128字节 用户
+工作寄存器 8个字节 00H~17H
+R0～R7 共8个 4组
+0,1,2,3
+位寻址区          20H~2FH
+SETB CLR
+16*8=128
+每一位用00H-7FH</p>
+<pre><code>  开放区            30H~7FH 
+</code></pre>
+<p>后128字节 特殊寄存器SFR PSW ACC</p>
+</li>
+<li>
+<p>外部64K
+I/O</p>
+</li>
+</ul>
+</li>
+<li>
+<p>时钟与时序</p>
+<ul>
+<li>80C51单片机具有内部时钟电路，只需外界晶振</li>
+<li>1状态（时钟）周期＝2振荡周期</li>
+<li>1机器周期＝6状态周期=12振荡周期</li>
+<li>1指令周期＝1或2或4个机器周期（无3周期）</li>
+</ul>
+<p>晶振    振荡周期   状态周期   机器周期  指令周期
+6MHz   1/6μs     1/3μs     2μs      2~8μs
+12MHz  1/12μs    1/6μs     1μs      1~4μs</p>
+</li>
+</ul>
+</li>
+<li>
+<p>80C51的指令系统</p>
+</li>
+<li>
+<p>汇编语言程序设计</p>
+</li>
+<li>
+<p>定时器计数器</p>
+</li>
+</ol>
+
+</body>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script>
+
+</html>
