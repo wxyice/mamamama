@@ -365,6 +365,7 @@ code {
           : 'default'
     });
   </script>
+<h1 id="codingutf-8">-<em>-coding:utf-8 -</em>-</h1>
 <h1 id="%E8%80%83%E8%AF%95%E8%A6%81%E6%B1%82">考试要求</h1>
 <p>考试题型</p>
 <ol>
@@ -374,9 +375,7 @@ code {
 <li>编程题  4个</li>
 </ol>
 <h1 id="%E9%87%8D%E7%82%B9">重点</h1>
-<ol>
-<li>
-<p>单片机系统的基本知识</p>
+<h2 id="%E5%8D%95%E7%89%87%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86">单片机系统的基本知识</h2>
 <ol>
 <li>
 <p>基本概念
@@ -513,9 +512,7 @@ DRAM</p>
 地址可用8位二进制数表示（寻址256个单元，用于片内RAM），也可用16位表示（最大寻址64K个单元，用于片内和片外程序存储器，以及片外数据存储器寻址）</p>
 </li>
 </ol>
-</li>
-<li>
-<p>单片机的结构和原理</p>
+<h2 id="%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E7%BB%93%E6%9E%84%E5%92%8C%E5%8E%9F%E7%90%86">单片机的结构和原理</h2>
 <ul>
 <li>
 <p>80C51 结构</p>
@@ -724,17 +721,374 @@ I/O</p>
 12MHz  1/12μs    1/6μs     1μs      1~4μs</p>
 </li>
 </ul>
+<h2 id="80c51%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F">80C51的指令系统</h2>
+<p>概述</p>
+<ul>
+<li>机器语言：采用二进制代码表示指令，计算机能够存储、识别并执行</li>
+<li>汇编语言：采用助记符表示指令，与具体计算机相关，比机器语言直观、易懂，便于记忆。但程序可读性仍较差，编写和调试周期较长。汇编可分为手工汇编和机器汇编两种</li>
+<li>高级语言：不受具体计算机的限制，使用许多表达式和函数，近似于人们的日常用语，直观、易学、易懂，通用性强</li>
+</ul>
+<h3 id="%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80">指令系统基础</h3>
+<pre><code>80C51 有111条指令
+分类
+</code></pre>
+<ul>
+<li>字节数
+<ul>
+<li>单字节 49</li>
+<li>双字节 46</li>
+<li>三字节 16</li>
+</ul>
+</li>
+<li>运算速度
+<ul>
+<li>单周期 64</li>
+<li>双周期 45</li>
+<li>四周期 2</li>
+</ul>
+</li>
+<li>功能
+<ul>
+<li>数据传送29条</li>
+<li>算术运算24条</li>
+<li>逻辑运算24条</li>
+<li>控制转移17条</li>
+<li>布尔操作17条</li>
+</ul>
+</li>
+</ul>
+<p>书写格式：[标号]: 操作码[操作数1], [操作数2], [操作数3] ；[注释]</p>
+<ul>
+<li>操作码：由助记符表示的字符串，说明指令的操作功能。</li>
+<li>操作数参与操作的数据或数据地址，可分为源操作数（原料）和目的操作数（结果），用逗号分隔。操作数可为0~3个。</li>
+<li>标号是语句地址的标志符号，主要用于程序的跳转。</li>
+<li>注释分号;之后，对该条指令的说明。</li>
+</ul>
+<p><a href="https://wxyice.github.io/2020/04/07/51%E5%8D%95%E7%89%87%E6%9C%BA%E5%9F%BA%E7%A1%80/#more">具体指令参考网页</a></p>
+<p>SP默认是07H（工作寄存器第2组的位置）
+压入的第一个数据的位置是在07H+1H=08H位置</p>
+<p>数据交换指令
+XCH
+XCHD
+SWAP</p>
+<p>注意</p>
+<ol>
+<li>
+<p>指令中有一个操作数为常数，能够直接参与操作，称“立即数”。</p>
 </li>
 <li>
-<p>80C51的指令系统</p>
+<p>注：能作间址寄存器的只有R0,R1,DPTR(堆栈操作除外，SP)。</p>
 </li>
 <li>
-<p>汇编语言程序设计</p>
+<p>MOV direct1, direct2 ;direct1←(direct2)，*机器码为逆序</p>
 </li>
 <li>
-<p>定时器计数器</p>
+<p>16位数据传送指令（唯一1条）MOV DPTR, #data16 ;DPTR←data16</p>
+</li>
+<li>
+<p>工作寄存器之间不能直接进行数据传送，即没有MOV Rn,Rn或MOV Rn,@Ri之类的指令。</p>
+</li>
+<li>
+<p>有符号加数或被加数为负数时，需要放置该负数的补码；结果为负数时，A中为该负数结果的补码。</p>
+</li>
+<li>
+<ul>
+<li>若bit7有进位，CY=1。反之，CY=0。</li>
+<li>若bit3有进位，AC=1。反之，AC=0。</li>
+<li>若bit7（CY）和bit6（AC）有且仅有一位进位，OV=1，反之，OV=0。</li>
+</ul>
+</li>
+<li>
+<p>没有DEC DPTR 指令，其余与加1指令类似。</p>
+</li>
+<li>
+<p>51指令系统中没有不带借位减法指令，若需进行不带借位减法操作，可在执行减法操作前，执行CLR C 指令（CLR CY的简记方法），将CY清零。</p>
+</li>
+<li>
+<p>乘法指令【MUL AB;A←{(A)×(B)}_低8位 B←{(A)×(B)}_高8位】</p>
+<ul>
+<li>仅针对累加器A和B寄存器中的无符号数，需4个机器周期。</li>
+<li>运算乘积结果为2字节，低位存放在A中，高位存放在B中。</li>
+<li>运算结果大于00FFH，OV=1，否则OV=0。CY一定被清零。不影响AC。</li>
+</ul>
+</li>
+<li>
+<p>除法指令 【DIV AB;A←{(A)÷(B)}_商 B←{(A)÷(B)}_余数】</p>
+<ul>
+<li>仅针对累加器A和B寄存器中的无符号数，需4个机器周期。</li>
+<li>运算商存放在A中，余数存放在B中。</li>
+<li>运算前B=0则OV=1，否则OV=0。CY一定被清零。不影响AC。</li>
+</ul>
+</li>
+<li>
+<p>DA A</p>
+<ul>
+<li>仅用于压缩BCD码加法运算后的调整</li>
+<li>若A3~0&gt;9或AC=1，则A←(A)+06H</li>
+<li>若A7~4&gt;9或CY=1，则A←(A)+60H</li>
+<li>指令用于ADD或ADDC指令之后，不影响标志位AC和OV。</li>
+<li>若高4位加6调整后产生最高位进位，则置位CY，反之，不清零CY</li>
+<li>不能用于减法SUBB指令之后。</li>
+</ul>
+<p>压缩BCD可以直接做加法运算 然后在DA调整</p>
+</li>
+<li>
+<p>CPL A ; 累加器A按位取反。</p>
+</li>
+<li>
+<p>80C51单片机有4条针对累加器A的移位指令。可用于乘2或除2的运算。A左移1位是乘2，右移一位是除2。</p>
+</li>
+<li>
+<p>LJMP 长</p>
+</li>
+<li>
+<p>AJMP 绝对 PC高5位不变 与低11位一起</p>
+</li>
+<li>
+<p>SJMP 相对 rel 有符号数</p>
+</li>
+<li>
+<p>条件转移指令：条件满足则跳转；条件不满足则顺序执行。</p>
+<ol>
+<li>判断累加器A是否为零的跳转
+<ol>
+<li>JZ rel</li>
+<li>JNZ rel</li>
+</ol>
+</li>
+<li>比较转移 compare jump if not equal
+<ol>
+<li>CJNE A，direct，rel</li>
+</ol>
+</li>
+<li>自减１条件跳转指令 decrease and jump if not zero
+<ol>
+<li>Rn-1=0?</li>
+</ol>
+</li>
+<li>JZ和JNZ以A中数据作为判断条件，不影响标志位。</li>
+<li>CJNE 操作数1,操作数2,rel执行指令前后操作数不变。对标志位的影响：若操作数1≥操作数2，CY=0，反之，CY=1。
+<ol>
+<li>做了 操作数1-操作数2 大于 不借位 CY=0</li>
+</ol>
+</li>
+<li>DJNZ 操作数,rel执行指令后，不影响标志位。</li>
+<li>以上条件转移指令在单片机中执行时，跳转起始地址均为下一条指令的首地址，</li>
+</ol>
+</li>
+<li>
+<p>汇编语言程序编写时只需要写明跳转目标的标号，汇编时计算rel</p>
+</li>
+<li>
+<p>JMP @A+DPTR;PC转移指向A+DPTR（变址寻址，目标地址在程序运行时才确定）PC&lt;-(A)+(DPTR)</p>
+</li>
+<li>
+<p>主程序通过调用指令转入子程序执行，子程序通过返回指令返回主程序调用指令的下一指令继续执行。通过堆栈记录子程序要返回的PC地址</p>
+<ul>
+<li>入栈的是下一条指令的地址</li>
+<li>SP=SP+2</li>
+<li>小端规则 低位在下 高位在上</li>
+<li>LCALL</li>
+<li>ACALL</li>
+<li>RET
+<ul>
+<li>推出两个</li>
+<li>SP = SP-2</li>
+</ul>
+</li>
+<li>RETI 中断服务子程序返回指令。指令执行后，开放同级别中断。
+<ul>
+<li>外部中断0、外部中断1、Timer 0中断、Timer 1中断、串行通信中断</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>NOP;没有任何操作，只是消耗1机器周期。</p>
+</li>
+<li>
+<p>可位寻址的字节 PSW.5、P1.0、20H.7</p>
+</li>
+<li>
+<p>位的名称，如F0、RS0。</p>
+</li>
+<li>
+<p>位数据传送指令</p>
+<ol>
+<li>MOV C,bit;bit 设置到CY中，CY兼做布尔操作中的累加</li>
+<li>MOV bit, C ;CY设置到bit 中。</li>
+</ol>
+</li>
+<li>
+<p>位修改指令</p>
+<ol>
+<li>CLR 清0</li>
+<li>SETB 置1</li>
+<li>CPL 取反</li>
+</ol>
+</li>
+<li>
+<p>位逻辑运算指令</p>
+<ol>
+<li>ANL</li>
+<li>ORL</li>
+</ol>
+</li>
+<li>
+<p>位转移</p>
+<ol>
+<li>JC</li>
+<li>JNC</li>
+<li>JB bit</li>
+<li>JNB</li>
+<li>JBC bit=1清bit转移 否则顺序</li>
+</ol>
+</li>
+<li>
+<p>伪指令 不产生机器码。共8条。</p>
+<ol>
+<li>ORG 规定了程序的起始地址，之后的汇编程序从该地址开始依次存放。</li>
+<li>END 指示程序到此结束，之后的指令不予汇编。只能放在整个程序的末尾</li>
+<li>EQU 赋值伪指令
+<ul>
+<li>把表达式所确定的值赋给变量名。</li>
+<li>先定义，再使用，通常放在程序开头，不能重复定义。</li>
+</ul>
+</li>
+<li>[标号:]DBbyte1,byte2,byte3.... 定义字节伪指令</li>
+<li>[标号:]DWword1,word2,word3.... 定义字（双字节）伪指令</li>
+<li>BIT 定义位伪指令</li>
+<li>DATA 定义数据地址伪指令</li>
+<li>DS 定义储存区伪指令 单片机中用这个没啥意思 用ORG</li>
+</ol>
+</li>
+<li>
+<p>循环程序包括：循环初始化，循环处理，循环控制3部分。</p>
 </li>
 </ol>
+<h2 id="%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">汇编语言程序设计</h2>
+<pre class="hljs"><code><div>DIV2: 
+    MOV A,R5
+    ORL A,R4
+    JZ OVER     ; 除数为0, 转OVER
+BEGIN:
+    CLR A
+    MOV R3,A
+    MOV R2,A
+    MOV R1,#16     ; 置循环计数器
+DIV0: 
+    ACALL RLC4      ; 被除数和部分余数左移1位
+    MOV F0,C       ; 保存移位操作最高位的状态
+    CLR C
+    MOV A,R2
+    SUBB A,R4
+    MOV R0,A 
+    MOV A,R3
+    SUBB A,R5
+    ANL C,/F0      ; 有借位（不够减）且移位无进位
+    JC NEXT         ; 部分余数&lt;除数, 转NEXT, 差丢弃
+    INC R6          ; 在商移位的前提下，商＋1
+    MOV R3,A       ; 差-&gt; 部分余数（高位A,低位R0）
+    MOV A,R0
+    MOV R2,A
+NEXT: 
+    DJNZ R1,DIV0   ; 判别是否需要继续做下一次除法
+    MOV A,R2
+    RLC A
+    MOV R2,A
+    MOV A,R3
+    RLC A
+    MOV R3,A
+    JC ROUND 
+    MOV A,R2
+    SUBB A,R4
+    MOV A,R3
+    SUBB A,R5
+    JC DONE 
+ROUND: 
+    ACALL ADD1 
+DONE: 
+    CLR A
+    RET
+OVER: 
+    SETB OV; 置溢出标志
+    RET
+RLC4: 
+    CLR C
+    MOV A,R6
+    RLC A
+    MOV R6,A
+    MOV A,R7
+    RLC A
+    MOV R7,A
+    MOV A,R2
+    RLC A 
+    MOV R2,A
+    MOV A,R3
+    RLC A
+    MOV R3,A
+    RET
+ADD1:               ;商R7R6+1
+    MOV A, R6
+    ADD A, #1
+    MOV R6, A
+    MOV A, R7
+    ADDC A, #0
+    MOV R7, A
+    RET
+</div></code></pre>
+<h2 id="%E5%AE%9A%E6%97%B6%E5%99%A8%E8%AE%A1%E6%95%B0%E5%99%A8">定时器计数器</h2>
+<p>定时器: 加1信号来自对振荡器12分频以后，即对固定频率脉冲信号计数。计数器: 加1信号来自外部引脚。
+作为定时器时：最短定时周期为1个机器周期。
+作为计数器时：每个机器周期采样一次引脚电平，一次为“1”，下次为“0”时，计数器加1，为确保计数正确，高、低电平至少保持一个机器周期以上。</p>
+<p>方式寄存器TMOD (89H)</p>
+<p>C/T=0时：定时器模式，每个机器周期计数器加1，至溢出。
+C/T=1时：计数器模式，对T0, T1的外部输入信号计数。</p>
+<p>控制寄存器TCON (88H)
+T1溢出时，TF1=1，申请中断(001BH)。进入中断服务程序后，由硬件自动清除。
+TR1: T1运行控制位。
+$t = T_c×(2^L－T_初)$</p>
+<ul>
+<li>
+<p>t  —定时时间</p>
+</li>
+<li>
+<p>Tc—机器周期(12/fosc)</p>
+</li>
+<li>
+<p>L  —计数器位数，方式1为16</p>
+</li>
+<li>
+<p>T初—定时器初值</p>
+</li>
+<li>
+<p>对TMOD赋值，设置定时计数方式</p>
+</li>
+<li>
+<p>向TH0、TL0写入初始值</p>
+</li>
+<li>
+<p>开放中断(用于中断方式)，如不开放则不触发中断</p>
+</li>
+<li>
+<p>通过TR0启动定时/计数器</p>
+</li>
+<li>
+<p>通过TF0判别定时计数是否结束</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>ORG 0100H
+MOV TMOD,#01H; 设置T0定时，方式1
+MOV TH0,#0DCH; 设置定时器初值
+MOV TL0,#00H
+SETB TR0; 启动定时器
+LP1:JBC TF0,LP2; 定时时间到，清TF0，转LP2
+SJMP LP1; 定时时间未到，等待
+LP2:MOV TH0,#0DCH; 重新设置定时器初值
+MOV TL0,#00H
+CPL P1.0; P1.0口电平取反（读-改-写）
+SJMP LP1
+</div></code></pre>
 
 </body>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
